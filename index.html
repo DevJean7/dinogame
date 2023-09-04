@@ -146,10 +146,10 @@
     }
     .jump-button {
   position: absolute;
-  top: 10px;
+  top: 300px;
   left: 10px;
-  padding: 10px 20px;
-  font-size: 18px;
+  padding: 50px;
+  font-size: 27px;
   cursor: pointer;
   background-color: #007bff;
   color: white;
@@ -162,14 +162,14 @@
 <center>
 
   <body>
-    <h1>DINO GAME - 2210 (feito por jean)</h1>
+    <h1>DINO GAME - 2210 </h1>
     <div class="game-container">
       <div class="dino"></div>
       <div class="obstacle"></div>
       <div class="new-obstacle"></div> <!-- Novo obstáculo adicionado -->
       <button class="reset-button">Reiniciar Jogo</button>
-      <button class="jump-button">Pular</button>
-    </div>
+       </div>
+       <button class="jump-button">Pular</button>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <audio id="hitSound">
       <source src="seuanimal (online-audio-converter.com).mp3" type="audio/mpeg">
@@ -272,7 +272,7 @@ jumpButton.addEventListener('click', () => {
     ) {
       const hitSound = document.getElementById('hitSound2');
       hitSound.play();
-      alert('Você colidiu com o novo obstáculo!');
+      alert('voce morreu, faça o curso da cisco!!!')
     } else {
       requestAnimationFrame(moveNewObstacle);
     }
