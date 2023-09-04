@@ -144,7 +144,18 @@
         color: orange;
       }
     }
-   
+    .jump-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
   </style>
   <title>Dino Game</title>
 </head>
@@ -157,6 +168,7 @@
       <div class="obstacle"></div>
       <div class="new-obstacle"></div> <!-- Novo obstáculo adicionado -->
       <button class="reset-button">Reiniciar Jogo</button>
+      <button class="jump-button">Pular</button>
     </div>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <audio id="hitSound">
@@ -172,7 +184,7 @@
       Seu navegador não suporta o elemento de áudio.
     </audio>
     <audio id="backgroundMusic" loop autoplay>
-      <source src="audiodefundo2.mpeg" type="audio/mpeg">
+      <source src="audiodefundo2.mp3" type="audio/mpeg">
       Seu navegador não suporta o elemento de áudio.
     </audio>
   </body>
@@ -185,6 +197,12 @@
   const resetButton = document.querySelector('.reset-button');
   const jumpSound = document.getElementById('jumpSound');
   const backgroundMusic = document.getElementById('backgroundMusic');
+  const jumpButton = document.querySelector('.jump-button');
+
+jumpButton.addEventListener('click', () => {
+  jump();
+  jumpSound.play();
+});
   scoreDisplay.classList.add('score');
   document.body.appendChild(scoreDisplay);
   let isJumping = false;
