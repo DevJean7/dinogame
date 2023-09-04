@@ -6,6 +6,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
+  body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f7f7; /* Cor de fundo alternativa */
+  }
+
+  .game-container {
+    position: relative;
+    width: 80%; /* Largura do container ajustada */
+    max-width: 600px; /* Largura máxima do container */
+    height: 200px; /* Altura do container ajustada */
+    background-color: #fff;
+    border: 1px solid #000;
+    overflow: hidden;
+  }
+
+  .dino {
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 20%; /* Largura do dinossauro ajustada */
+    height: auto; /* Altura do dinossauro ajustada */
+  }
+
+  .obstacle,
+  .new-obstacle {
+    position: absolute;
+    bottom: 0;
+    left: 100%;
+    width: 15%; /* Largura do obstáculo ajustada */
+    height: auto; /* Altura do obstáculo ajustada */
+  }
     body {
       margin: 0;
       display: flex;
@@ -123,7 +158,7 @@
       <div class="new-obstacle"></div> <!-- Novo obstáculo adicionado -->
       <button class="reset-button">Reiniciar Jogo</button>
     </div>
-   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <audio id="hitSound">
       <source src="seuanimal (online-audio-converter.com).mp3" type="audio/mpeg">
       Seu navegador não suporta o elemento de áudio.
@@ -137,7 +172,7 @@
       Seu navegador não suporta o elemento de áudio.
     </audio>
     <audio id="backgroundMusic" loop autoplay>
-      <source src="audiodefundo.mp3" type="audio/mpeg">
+      <source src="audiodefundo2.mpeg" type="audio/mpeg">
       Seu navegador não suporta o elemento de áudio.
     </audio>
   </body>
