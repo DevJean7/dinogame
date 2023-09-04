@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url('fundo1.avif');
+      /* Substitua pelo caminho da imagem de fundo */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .game-container {
+      position: relative;
+      width: 600px;
+      height: 300px;
+      background-color: #fff;
+      border: 1px solid #000;
+      overflow: hidden;
+      background-image: url('fundo1.avif');
+    }
+
+    .dino {
+      position: absolute;
+      bottom: 0;
+      left: 50px;
+      width: 120px;
+      /* Largura da imagem do dinossauro */
+      height: 130px;
+      /* Altura da imagem do dinossauro */
+      background-image: url('dino1.gif');
+      /* Substitua pelo caminho da imagem do dinossauro */
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    .obstacle {
+      position: absolute;
+      bottom: 0;
+      left: 600px;
+      width: 80px;
+      /* Largura da imagem do tronco */
+      height: 70px;
+      /* Altura da imagem do tronco */
+      background-image: url('flavio-unscreen.gif');
+      /* Substitua pelo caminho da imagem do tronco */
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    .new-obstacle {
+      position: absolute;
+      bottom: 0;
+      left: 600px;
+      width: 80px;
+      /* Largura da imagem do tronco */
+      height: 70px;
+      /* Altura da imagem do tronco */
+      background-image: url('marcio3.gif');
+      /* Substitua pelo caminho da imagem do tronco */
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    .score {
+      position: absolute;
+      top: 10px;
+      left: 135px;
+      padding: 280px;
+      /* Posiciona a pontuação no canto superior direito */
+      font-size: 20px;
+      color: white;
+      position: fixed;
+    }
+
+    .reset-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    
+    h1 {
+      font-family: 'Indie Flower', cursive;
+      font-size: 36px;
+      animation: colorChange 3s infinite alternate;
+    }
+
+    @keyframes colorChange {
+      0%, 100% {
+        color: green;
+      }
+      50% {
+        color: orange;
+      }
+    }
+   
+  </style>
+  <title>Dino Game</title>
+</head>
+<center>
+
+  <body>
+    <h1>DINO GAME - 2210 (feito por jean)</h1>
+    <div class="game-container">
+      <div class="dino"></div>
+      <div class="obstacle"></div>
+      <div class="new-obstacle"></div> <!-- Novo obstáculo adicionado -->
+      <button class="reset-button">Reiniciar Jogo</button>
+    </div>
+   
+    <audio id="hitSound">
+      <source src="seuanimal (online-audio-converter.com).mp3" type="audio/mpeg">
+      Seu navegador não suporta o elemento de áudio.
+    </audio>
+    <audio id="hitSound2">
+      <source src="marciofalando.mpeg" type="audio/mpeg">
+      Seu navegador não suporta o elemento de áudio.
+    </audio>
+    <audio id="jumpSound">
+      <source src="cartoon-jump-6462.mp3" type="audio/mpeg">
+      Seu navegador não suporta o elemento de áudio.
+    </audio>
+    <audio id="backgroundMusic" loop autoplay>
+      <source src="audiodefundo.mp3" type="audio/mpeg">
+      Seu navegador não suporta o elemento de áudio.
+    </audio>
+  </body>
+</center>
+<script>
+  const dino = document.querySelector('.dino');
+  const obstacle = document.querySelector('.obstacle');
+  const newObstacle = document.querySelector('.new-obstacle'); // Novo obstáculo
+  const scoreDisplay = document.createElement('div');
+  const resetButton = document.querySelector('.reset-button');
+  const jumpSound = document.getElementById('jumpSound');
+  const backgroundMusic = document.getElementById('backgroundMusic');
+  scoreDisplay.classList.add('score');
+  document.body.appendChild(scoreDisplay);
+  let isJumping = false;
+  let obstaclePosition = 600;
+  let newObstaclePosition = 950;
+  let score = 0;
+
+  function jump() {
+    if (!isJumping) {
+      isJumping = true;
+      let position = 0;
+      const jumpInterval = setInterval(() => {
+        if (position >= 150) {
+          jumpSound.play();
+          clearInterval(jumpInterval);
+          let downInterval = setInterval(() => {
+            if (position <= 0) {
+              clearInterval(downInterval);
+              isJumping = false;
+            }
+            position -= 20;
+            dino.style.bottom = position + 'px';
+          }, 20);
+        }
+        position += 20;
+        dino.style.bottom = position + 'px';
+      }, 20);
+    }
+  }
+
+  function moveObstacle() {
+    obstaclePosition -= 5;
+    obstacle.style.left = obstaclePosition + 'px';
+
+    if (obstaclePosition < 0) {
+      obstaclePosition = 800;
+      score++;
+      updateScoreDisplay();
+    }
+
+    if (
+      obstaclePosition > 50 && obstaclePosition < 100 &&
+      parseInt(getComputedStyle(dino).getPropertyValue('bottom')) < 40
+    ) {
+      const hitSound = document.getElementById('hitSound');
+      hitSound.play();
+      alert('Você morreu, seu animal!');
+    } else {
+      requestAnimationFrame(moveObstacle);
+    }
+  }
+
+  function moveNewObstacle() {
+    newObstaclePosition -= 5;
+    newObstacle.style.left = newObstaclePosition + 'px';
+
+    if (newObstaclePosition < 0) {
+      newObstaclePosition = 800;
+      score++; // Incrementa a pontuação ao passar pelo novo obstáculo
+      updateScoreDisplay(); // Atualiza a exibição da pontuação
+      jumpSound.play();
+    }
+
+    if (
+      newObstaclePosition > 50 && newObstaclePosition < 100 &&
+      parseInt(getComputedStyle(dino).getPropertyValue('bottom')) < 40
+    ) {
+      const hitSound = document.getElementById('hitSound2');
+      hitSound.play();
+      alert('Você colidiu com o novo obstáculo!');
+    } else {
+      requestAnimationFrame(moveNewObstacle);
+    }
+
+    if (
+      newObstaclePosition > 50 && newObstaclePosition < 100 &&
+      parseInt(getComputedStyle(dino).getPropertyValue('bottom')) >= 40
+    ) {
+      jumpSound.play(); // Reproduz o som de pulo ao pular o segundo obstáculo
+    }
+  }
+  function updateScoreDisplay() {
+    scoreDisplay.textContent = `Pontuação: ${score}`;
+  }
+
+  updateScoreDisplay();
+  moveObstacle();
+  moveNewObstacle();
+
+  document.addEventListener('keydown', (event) => {
+    if (event.code === 'Space') {
+      jump();
+      jumpSound.play();
+    }
+  });
+
+  resetButton.addEventListener('click', () => {
+    location.reload();
+  });
+</script>
+
+</html>
