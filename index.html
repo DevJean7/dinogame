@@ -333,19 +333,8 @@
     location.reload();
   });
   function updateScoreDisplay() {
-    scoreDisplay.textContent = `Pontuação: ${score}`;
+    scoreDisplay.textContent = `Pontos: ${score}`;
   }
-  document.getElementById("start-button").addEventListener("click", function () {
-    // Esconde o botão "Start" e o overlay
-    this.style.display = "none";
-    document.getElementById("overlay").style.display = "none";
-
-    // Mostra o conteúdo da página
-    document.getElementById("content").style.display = "block";
-  });
-
-  // Mostra o overlay inicialmente para congelar a página
-  document.getElementById("overlay").style.display = "block";
 </script>
 </div>
 </html>
