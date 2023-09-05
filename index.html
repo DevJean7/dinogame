@@ -122,7 +122,7 @@
       padding: 280px;
       /* Posiciona a pontuação no canto superior direito */
       font-size: 25px;
-      color: white; 
+      color: white;
       font-family: 'Indie Flower', cursive;
       animation: colorChange 3s infinite alternate;
     }
@@ -137,7 +137,7 @@
       50% {
         color: orange;
       }
-      }
+    }
 
     .reset-button {
       position: absolute;
@@ -182,158 +182,158 @@
       border: none;
       border-radius: 5px;
     }
-
-
   </style>
   <title>Dino Game</title>
 </head>
 <center>
 
   <body>
-        <h1>DINO GAME - 2210 </h1>
-        <div class="game-container">
-          <div class="dino"></div>
-          <div class="obstacle"></div>
-          <div class="new-obstacle"></div> <!-- Novo obstáculo adicionado -->
-        </div>
-        <button class="reset-button">Reiniciar Jogo</button>
-        <button class="jump-button">Pular</button>
-  
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-      <audio id="hitSound">
-        <source src="seuanimal (online-audio-converter.com).mp3" type="audio/mpeg">
-        Seu navegador não suporta o elemento de áudio.
-      </audio>
-      <audio id="hitSound2">
-        <source src="marciofalando.mpeg" type="audio/mpeg">
-        Seu navegador não suporta o elemento de áudio.
-      </audio>
-      <audio id="jumpSound">
-        <source src="cartoon-jump-6462.mp3" type="audio/mpeg">
-        Seu navegador não suporta o elemento de áudio.
-      </audio>
-      <audio id="backgroundMusic" loop autoplay>
-        <source src="audiodefundo2.mp3" type="audio/mpeg">
-        Seu navegador não suporta o elemento de áudio.
-      </audio>
-   
-  </body>
-</center>
-<script>
-  const dino = document.querySelector('.dino');
-  const obstacle = document.querySelector('.obstacle');
-  const newObstacle = document.querySelector('.new-obstacle'); // Novo obstáculo
-  const scoreDisplay = document.createElement('div');
-  const resetButton = document.querySelector('.reset-button');
-  const jumpSound = document.getElementById('jumpSound');
-  const backgroundMusic = document.getElementById('backgroundMusic');
-  const jumpButton = document.querySelector('.jump-button');
+    <h1>DINO GAME - 2210</h1>
+    <div class="game-container">
+      <div class="dino"></div>
+      <div class="obstacle"></div>
+      <div class="new-obstacle"></div>
+      <!-- Novo obstáculo adicionado -->
+    </div>
+    <button class="reset-button">Reiniciar Jogo</button>
+    <button class="jump-button">Pular</button>
 
-  jumpButton.addEventListener('click', () => {
-    jump();
-    jumpSound.play();
-  });
-  scoreDisplay.classList.add('score');
-  document.body.appendChild(scoreDisplay);
-  let isJumping = false;
-  let obstaclePosition = 600;
-  let newObstaclePosition = 950;
-  let score = 0;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <audio id="hitSound">
+      <source src="seuanimal (online-audio-converter.com).mp3" type="audio/mpeg">
+      Seu navegador não suporta o elemento de áudio.
+    </audio>
+    <audio id="hitSound2">
+      <source src="marciofalando.mpeg" type="audio/mpeg">
+      Seu navegador não suporta o elemento de áudio.
+    </audio>
+    <audio id="jumpSound">
+      <source src="cartoon-jump-6462.mp3" type="audio/mpeg">
+      Seu navegador não suporta o elemento de áudio.
+    </audio>
+    <audio id="backgroundMusic" loop autoplay>
+      <source src="audiodefundo2.mp3" type="audio/mpeg">
+      Seu navegador não suporta o elemento de áudio.
+    </audio>
 
-  function jump() {
-    if (!isJumping) {
-      isJumping = true;
-      let position = 0;
-      const jumpInterval = setInterval(() => {
-        if (position >= 150) {
-          jumpSound.play();
-          clearInterval(jumpInterval);
-          let downInterval = setInterval(() => {
-            if (position <= 0) {
-              clearInterval(downInterval);
-              isJumping = false;
+    <script>
+      // Seu código JavaScript aqui
+      const dino = document.querySelector('.dino');
+      const obstacle = document.querySelector('.obstacle');
+      const newObstacle = document.querySelector('.new-obstacle');
+      const scoreDisplay = document.createElement('div');
+      const resetButton = document.querySelector('.reset-button');
+      const jumpSound = document.getElementById('jumpSound');
+      const backgroundMusic = document.getElementById('backgroundMusic');
+      const jumpButton = document.querySelector('.jump-button');
+
+      jumpButton.addEventListener('click', () => {
+        jump();
+        jumpSound.play();
+      });
+
+      scoreDisplay.classList.add('score');
+      document.body.appendChild(scoreDisplay);
+
+      let isJumping = false;
+      let obstaclePosition = 600;
+      let newObstaclePosition = 950;
+      let score = 0;
+
+      function jump() {
+        if (!isJumping) {
+          isJumping = true;
+          let position = 0;
+          const jumpInterval = setInterval(() => {
+            if (position >= 150) {
+              jumpSound.play();
+              clearInterval(jumpInterval);
+              let downInterval = setInterval(() => {
+                if (position <= 0) {
+                  clearInterval(downInterval);
+                  isJumping = false;
+                }
+                position -= 20;
+                dino.style.bottom = position + 'px';
+              }, 20);
             }
-            position -= 20;
+            position += 20;
             dino.style.bottom = position + 'px';
           }, 20);
         }
-        position += 20;
-        dino.style.bottom = position + 'px';
-      }, 20);
-    }
-  }
+      }
 
-  function moveObstacle() {
-    obstaclePosition -= 5;
-    obstacle.style.left = obstaclePosition + 'px';
+      function moveObstacle() {
+        obstaclePosition -= 5;
+        obstacle.style.left = obstaclePosition + 'px';
 
-    if (obstaclePosition < 0) {
-      obstaclePosition = 800;
-      score++;
+        if (obstaclePosition < 0) {
+          obstaclePosition = 800;
+          score++;
+          updateScoreDisplay();
+        }
+
+        if (
+          obstaclePosition > 50 && obstaclePosition < 100 &&
+          parseInt(getComputedStyle(dino).getPropertyValue('bottom')) < 40
+        ) {
+          const hitSound = document.getElementById('hitSound');
+          hitSound.play();
+          alert('Você morreu, seu animal!');
+        } else {
+          requestAnimationFrame(moveObstacle);
+        }
+      }
+
+      function moveNewObstacle() {
+        newObstaclePosition -= 5;
+        newObstacle.style.left = newObstaclePosition + 'px';
+
+        if (newObstaclePosition < 0) {
+          newObstaclePosition = 800;
+          score++;
+          updateScoreDisplay();
+          jumpSound.play();
+        }
+
+        if (
+          newObstaclePosition > 50 && newObstaclePosition < 100 &&
+          parseInt(getComputedStyle(dino).getPropertyValue('bottom')) < 40
+        ) {
+          const hitSound = document.getElementById('hitSound2');
+          hitSound.play();
+          alert('Você morreu, faça o curso da cisco!!!')
+        } else {
+          requestAnimationFrame(moveNewObstacle);
+        }
+
+        if (
+          newObstaclePosition > 50 && newObstaclePosition < 100 &&
+          parseInt(getComputedStyle(dino).getPropertyValue('bottom')) >= 40
+        ) {
+          jumpSound.play();
+        }
+      }
+
+      function updateScoreDisplay() {
+        scoreDisplay.textContent = `Pontos: ${score}`;
+      }
+
       updateScoreDisplay();
-    }
+      moveObstacle();
+      moveNewObstacle();
 
-    if (
-      obstaclePosition > 50 && obstaclePosition < 100 &&
-      parseInt(getComputedStyle(dino).getPropertyValue('bottom')) < 40
-    ) {
-      const hitSound = document.getElementById('hitSound');
-      hitSound.play();
-      alert('Você morreu, seu animal!');
-    } else {
-      requestAnimationFrame(moveObstacle);
-    }
-  }
+      document.addEventListener('keydown', (event) => {
+        if (event.code === 'Space') {
+          jump();
+          jumpSound.play();
+        }
+      });
 
-  function moveNewObstacle() {
-    newObstaclePosition -= 5;
-    newObstacle.style.left = newObstaclePosition + 'px';
+      resetButton.addEventListener('touchstart', () => {
+        location.reload();
+      });
+    </script>
+  </body>
 
-    if (newObstaclePosition < 0) {
-      newObstaclePosition = 800;
-      score++; // Incrementa a pontuação ao passar pelo novo obstáculo
-      updateScoreDisplay(); // Atualiza a exibição da pontuação
-      jumpSound.play();
-    }
-
-    if (
-      newObstaclePosition > 50 && newObstaclePosition < 100 &&
-      parseInt(getComputedStyle(dino).getPropertyValue('bottom')) < 40
-    ) {
-      const hitSound = document.getElementById('hitSound2');
-      hitSound.play();
-      alert('voce morreu, faça o curso da cisco!!!')
-    } else {
-      requestAnimationFrame(moveNewObstacle);
-    }
-
-    if (
-      newObstaclePosition > 50 && newObstaclePosition < 100 &&
-      parseInt(getComputedStyle(dino).getPropertyValue('bottom')) >= 40
-    ) {
-      jumpSound.play(); // Reproduz o som de pulo ao pular o segundo obstáculo
-    }
-  }
-  resetButton.addEventListener('click', () => {
-    location.reload();
-  });
-  function updateScoreDisplay() {
-    scoreDisplay.textContent = `Pontos: ${score}`;
-  }
-
-  updateScoreDisplay();
-  moveObstacle();
-  moveNewObstacle();
-
-  document.addEventListener('keydown', (event) => {
-    if (event.code === 'Space') {
-      jump();
-      jumpSound.play();
-    }
-  });
-  function updateScoreDisplay() {
-    scoreDisplay.textContent = `Pontos: ${score}`;
-  }
-</script>
-</div>
 </html>
